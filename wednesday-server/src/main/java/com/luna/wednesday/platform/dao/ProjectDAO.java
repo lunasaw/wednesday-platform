@@ -6,7 +6,6 @@ import com.luna.wednesday.platform.entity.ProjectDO;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
-
 /**
  * (tb_project).
  *
@@ -14,8 +13,25 @@ import org.apache.ibatis.type.JdbcType;
  * @since 2021/02/03 19:40:18
  */
 @Mapper
-public interface ProjectDAO{
+public interface ProjectDAO {
 
+    /**
+     * 状态批量查询
+     * 
+     * @param status
+     * @return
+     */
+    @Select("select  id, create_time, modified_time, version, project_name, project_status, project_lines  from tb_project where status=#{status}")
+    @Results({
+        @Result(column = "id", property = "id", id = true),
+        @Result(column = "create_time", property = "createTime"),
+        @Result(column = "modified_time", property = "modifiedTime"),
+        @Result(column = "version", property = "version"),
+        @Result(column = "project_name", property = "projectName"),
+        @Result(column = "project_status", property = "projectStatus"),
+        @Result(column = "project_lines", property = "projectLines"),
+    })
+    List<ProjectDO> listByStatus(@Param("status") String status);
 
     /**
      * 根据id查询
@@ -25,15 +41,15 @@ public interface ProjectDAO{
      */
     @Select("select  id, create_time, modified_time, version, project_name, project_status, project_lines  from tb_project where id = #{id}")
     @Results({
-            @Result(column = "id",property= "id", id = true),
-            @Result(column = "create_time",property="createTime"),
-            @Result(column = "modified_time",property="modifiedTime"),
-            @Result(column = "version",property="version"),
-            @Result(column = "project_name",property="projectName"),
-            @Result(column = "project_status",property="projectStatus"),
-            @Result(column = "project_lines",property="projectLines"),
+        @Result(column = "id", property = "id", id = true),
+        @Result(column = "create_time", property = "createTime"),
+        @Result(column = "modified_time", property = "modifiedTime"),
+        @Result(column = "version", property = "version"),
+        @Result(column = "project_name", property = "projectName"),
+        @Result(column = "project_status", property = "projectStatus"),
+        @Result(column = "project_lines", property = "projectLines"),
     })
-    ProjectDO get(@Param("id")Long  id);
+    ProjectDO get(@Param("id") Long id);
 
     /**
      * 单个插入
@@ -42,7 +58,7 @@ public interface ProjectDAO{
      * @return
      */
     @Insert("insert into tb_project(create_time, modified_time, version, project_name, project_status, project_lines) "
-            + "values(now(), now(), 0, #{projectName}, #{projectStatus}, #{projectLines})")
+        + "values(now(), now(), 0, #{projectName}, #{projectStatus}, #{projectLines})")
     @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "id", before = false, resultType = Long.class)
     int insert(ProjectDO projectDO);
 
@@ -52,9 +68,9 @@ public interface ProjectDAO{
      * @param list ProjectDO列表
      */
     @Insert("<script>insert into tb_project(create_time, modified_time, version, project_name, project_status, project_lines) values "
-            + "<foreach collection='list' index='index' item='n' separator=','> "
-            + "(now(), now(), 0, #{n.projectName}, #{n.projectStatus}, #{n.projectLines})"
-            + "</foreach></script>")
+        + "<foreach collection='list' index='index' item='n' separator=','> "
+        + "(now(), now(), 0, #{n.projectName}, #{n.projectStatus}, #{n.projectLines})"
+        + "</foreach></script>")
     void insertBatch(@Param("list") List<ProjectDO> list);
 
     /**
@@ -63,7 +79,7 @@ public interface ProjectDAO{
      * @param projectDO
      */
     @Update("update tb_project set id = #{id}, create_time = #{createTime}, modified_time = now(), version = version, project_name = #{projectName}, project_status = #{projectStatus}, project_lines = #{projectLines} where id = #{id} and version=#{version}")
-    void update(ProjectDO  projectDO);
+    void update(ProjectDO projectDO);
 
     /**
      * 单个删除
@@ -71,7 +87,7 @@ public interface ProjectDAO{
      * @param id id
      */
     @Delete("delete from tb_project where id = #{id}")
-    void delete(Long id);
+    void delete(@Param("id") Long id);
 
     /**
      * 批量删除
@@ -79,9 +95,9 @@ public interface ProjectDAO{
      * @param ids ids
      */
     @Delete("<script>delete from tb_project where id in "
-            + "<foreach collection='ids' index='index' item='id' open='(' separator=',' close=')'>"
-            + "#{id}"
-            + "</foreach></script>")
+        + "<foreach collection='ids' index='index' item='id' open='(' separator=',' close=')'>"
+        + "#{id}"
+        + "</foreach></script>")
     void deleteByIds(@Param("ids") List<Long> ids);
 
     /**
@@ -91,4 +107,22 @@ public interface ProjectDAO{
      */
     @Select("select count(*) from tb_project")
     int count();
+
+    /**
+     * 状态查询project
+     * 
+     * @param status
+     * @return
+     */
+    @Select("select  id, create_time, modified_time, version, project_name, project_status, project_lines  from tb_project where WHERE status=#{status}")
+    @Results({
+        @Result(column = "id", property = "id", id = true),
+        @Result(column = "create_time", property = "createTime"),
+        @Result(column = "modified_time", property = "modifiedTime"),
+        @Result(column = "version", property = "version"),
+        @Result(column = "project_name", property = "projectName"),
+        @Result(column = "project_status", property = "projectStatus"),
+        @Result(column = "project_lines", property = "projectLines"),
+    })
+    ProjectDO getOneByStatus(@Param("status") String status);
 }

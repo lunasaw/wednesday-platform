@@ -91,4 +91,42 @@ public interface TaskResultDAO{
      */
     @Select("select count(*) from tb_task_result")
     int count();
+
+    /**
+     * 状态查询任务结果List
+     * 
+     * @param status
+     * @return
+     */
+    @Select("select id, create_time, modified_time, version, task_id, agent_id, status, result from tb_task_result where  WHERE status=#{status}")
+    @Results({
+        @Result(column = "id", property = "id", id = true),
+        @Result(column = "create_time", property = "createTime"),
+        @Result(column = "modified_time", property = "modifiedTime"),
+        @Result(column = "version", property = "version"),
+        @Result(column = "task_id", property = "taskId"),
+        @Result(column = "agent_id", property = "agentId"),
+        @Result(column = "status", property = "status"),
+        @Result(column = "result", property = "result"),
+    })
+    List<TaskResultDO> listByStatus(@Param("status") String status);
+
+    /**
+     * 任务id查询任务结果List
+     * 
+     * @param taskId
+     * @return
+     */
+    @Select("select id, create_time, modified_time, version, task_id, agent_id, status, result from tb_task_result where  WHERE task_id=#{taskId}")
+    @Results({
+        @Result(column = "id", property = "id", id = true),
+        @Result(column = "create_time", property = "createTime"),
+        @Result(column = "modified_time", property = "modifiedTime"),
+        @Result(column = "version", property = "version"),
+        @Result(column = "task_id", property = "taskId"),
+        @Result(column = "agent_id", property = "agentId"),
+        @Result(column = "status", property = "status"),
+        @Result(column = "result", property = "result"),
+    })
+    List<TaskResultDO> listByTaskId(@Param("taskId") long taskId);
 }

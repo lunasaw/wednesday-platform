@@ -12,8 +12,7 @@ import org.apache.ibatis.annotations.*;
  * @since 2021/02/04 15:35:58
  */
 @Mapper
-public interface StatusDAO{
-
+public interface StatusDAO {
 
     /**
      * 根据id查询
@@ -23,14 +22,14 @@ public interface StatusDAO{
      */
     @Select("select  id, create_time, modified_time, version, agent_id, content  from tb_status where id = #{id}")
     @Results({
-    	@Result(column = "id",property= "id", id = true),
-		@Result(column = "create_time",property="createTime"),
-		@Result(column = "modified_time",property="modifiedTime"),
-		@Result(column = "version",property="version"),
-		@Result(column = "agent_id",property="agentId"),
-		@Result(column = "content",property="content"),
-		})
-    StatusDO get(@Param("id")Long  id);
+        @Result(column = "id", property = "id", id = true),
+        @Result(column = "create_time", property = "createTime"),
+        @Result(column = "modified_time", property = "modifiedTime"),
+        @Result(column = "version", property = "version"),
+        @Result(column = "agent_id", property = "agentId"),
+        @Result(column = "content", property = "content"),
+    })
+    StatusDO get(@Param("id") Long id);
 
     /**
      * 单个插入
@@ -60,7 +59,7 @@ public interface StatusDAO{
      * @param statusDO
      */
     @Update("update tb_status set id = #{id}, create_time = #{createTime}, modified_time = now(), version = version, agent_id = #{agentId}, content = #{content} where id = #{id} and version=#{version}")
-    void update(StatusDO  statusDO);
+    void update(StatusDO statusDO);
 
     /**
      * 单个删除
@@ -88,4 +87,15 @@ public interface StatusDAO{
      */
     @Select("select count(*) from tb_status")
     int count();
+
+    @Select("select  id, create_time, modified_time, version, agent_id, content  from tb_status where  agent_id=#{agentId}")
+    @Results({
+        @Result(column = "id", property = "id", id = true),
+        @Result(column = "create_time", property = "createTime"),
+        @Result(column = "modified_time", property = "modifiedTime"),
+        @Result(column = "version", property = "version"),
+        @Result(column = "agent_id", property = "agentId"),
+        @Result(column = "content", property = "content"),
+    })
+    StatusDO getByAgentId(@Param("agentId") long agentId);
 }

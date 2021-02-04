@@ -5,7 +5,6 @@ import java.util.List;
 import com.luna.wednesday.platform.entity.TaskDO;
 import org.apache.ibatis.annotations.*;
 
-
 /**
  * (tb_task).
  *
@@ -13,8 +12,7 @@ import org.apache.ibatis.annotations.*;
  * @since 2021/02/03 19:57:21
  */
 @Mapper
-public interface TaskDAO{
-
+public interface TaskDAO {
 
     /**
      * 根据id查询
@@ -24,16 +22,16 @@ public interface TaskDAO{
      */
     @Select("select  id, create_time, modified_time, version, project_id, status, skip, limit  from tb_task where id = #{id}")
     @Results({
-    	@Result(column = "id",property= "id", id = true),
-		@Result(column = "create_time",property="createTime"),
-		@Result(column = "modified_time",property="modifiedTime"),
-		@Result(column = "version",property="version"),
-		@Result(column = "project_id",property="projectId"),
-		@Result(column = "status",property="status"),
-		@Result(column = "skip",property="skip"),
-		@Result(column = "limit",property="limit"),
-		})
-    TaskDO get(@Param("id")Long  id);
+        @Result(column = "id", property = "id", id = true),
+        @Result(column = "create_time", property = "createTime"),
+        @Result(column = "modified_time", property = "modifiedTime"),
+        @Result(column = "version", property = "version"),
+        @Result(column = "project_id", property = "projectId"),
+        @Result(column = "status", property = "status"),
+        @Result(column = "skip", property = "skip"),
+        @Result(column = "limit", property = "limit"),
+    })
+    TaskDO get(@Param("id") Long id);
 
     /**
      * 单个插入
@@ -91,4 +89,85 @@ public interface TaskDAO{
      */
     @Select("select count(*) from tb_task")
     int count();
+
+    /**
+     * 通过projectId和状态查询Task
+     * 
+     * @param id
+     * @param status
+     * @return
+     */
+    @Select("select  id, create_time, modified_time, version, project_id, status, skip, limit  from tb_task WHERE project_id=#{projectId} AND status=#{status} LIMIT 1")
+    @Results({
+        @Result(column = "id", property = "id", id = true),
+        @Result(column = "create_time", property = "createTime"),
+        @Result(column = "modified_time", property = "modifiedTime"),
+        @Result(column = "version", property = "version"),
+        @Result(column = "project_id", property = "projectId"),
+        @Result(column = "status", property = "status"),
+        @Result(column = "skip", property = "skip"),
+        @Result(column = "limit", property = "limit"),
+    })
+    TaskDO getOneByProjectIdAndStatus(@Param("id") Long id, @Param("status") String status);
+
+    /**
+     * 通过projectId 项目状态 拿出第一个项目的所有Task
+     * 
+     * @param projectId
+     * @param status
+     * @param limit
+     * @return
+     */
+    @Select("select  id, create_time, modified_time, version, project_id, status, skip, limit  from tb_task WHERE WHERE project_id=#{projectId} AND status=#{status} LIMIT #{limit}")
+    @Results({
+        @Result(column = "id", property = "id", id = true),
+        @Result(column = "create_time", property = "createTime"),
+        @Result(column = "modified_time", property = "modifiedTime"),
+        @Result(column = "version", property = "version"),
+        @Result(column = "project_id", property = "projectId"),
+        @Result(column = "status", property = "status"),
+        @Result(column = "skip", property = "skip"),
+        @Result(column = "limit", property = "limit"),
+    })
+    List<TaskDO> listByProjectIdAndStatusWithLimit(@Param("projectId") long projectId, @Param("status") String status,
+        @Param("limit") int limit);
+
+    /**
+     * 通过projectId和非本状态查询Task
+     *
+     * @param projectId
+     * @param status
+     * @return
+     */
+    @Select("select  id, create_time, modified_time, version, project_id, status, skip, limit  from tb_task WHERE WHERE project_id=#{projectId} AND status!=#{status} LIMIT 1")
+    @Results({
+        @Result(column = "id", property = "id", id = true),
+        @Result(column = "create_time", property = "createTime"),
+        @Result(column = "modified_time", property = "modifiedTime"),
+        @Result(column = "version", property = "version"),
+        @Result(column = "project_id", property = "projectId"),
+        @Result(column = "status", property = "status"),
+        @Result(column = "skip", property = "skip"),
+        @Result(column = "limit", property = "limit"),
+    })
+    TaskDO getOneByProjectIdAndNotStatus(@Param("projectId") long projectId, @Param("status") String status);
+
+    /**
+     * 状态查询任务List
+     * 
+     * @param status
+     * @return
+     */
+    @Select("select  id, create_time, modified_time, version, project_id, status, skip, limit  from tb_task WHERE WHERE WHERE status=#{status}")
+    @Results({
+        @Result(column = "id", property = "id", id = true),
+        @Result(column = "create_time", property = "createTime"),
+        @Result(column = "modified_time", property = "modifiedTime"),
+        @Result(column = "version", property = "version"),
+        @Result(column = "project_id", property = "projectId"),
+        @Result(column = "status", property = "status"),
+        @Result(column = "skip", property = "skip"),
+        @Result(column = "limit", property = "limit"),
+    })
+    List<TaskDO> listByStatus(@Param("status") String status);
 }
