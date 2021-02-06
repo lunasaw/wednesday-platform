@@ -38,5 +38,12 @@ public interface HashcatCoreService {
      */
     long createHashcatProject(String sessionKey, HashcatProjectDTO hashcatProjectDTO);
 
+    /**
+     * 提交返回结果
+     * 
+     * @param sessionKey
+     * @param agentId
+     * @param hashcatJobResultDTO
+     */
     void submitJobResult(String sessionKey, long agentId, HashcatJobResultDTO hashcatJobResultDTO);
 }

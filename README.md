@@ -1,1 +1,1 @@
-# wednesday
+# wednesday-platform
