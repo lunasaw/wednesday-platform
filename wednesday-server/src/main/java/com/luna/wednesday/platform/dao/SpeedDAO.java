@@ -92,4 +92,25 @@ public interface SpeedDAO {
      */
     @Select("select count(*) from tb_speed")
     int count();
+
+    /**
+     * 项目和跑的设备保证唯一性
+     * 
+     * @param agentId
+     * @param projectId
+     * @return
+     */
+    @Select("select id, create_time, modified_time, version, project_id, agent_id, task_size, running_second, indicators from tb_speed where id = #{id} and project_id =#{projectId}")
+    @Results({
+        @Result(column = "id", jdbcType = JdbcType.BIGINT, property = "id", id = true),
+        @Result(column = "create_time", property = "createTime"),
+        @Result(column = "modified_time", property = "modifiedTime"),
+        @Result(column = "version", property = "version"),
+        @Result(column = "project_id", property = "projectId"),
+        @Result(column = "agent_id", property = "agentId"),
+        @Result(column = "task_size", property = "taskSize"),
+        @Result(column = "running_second", property = "runningSecond"),
+        @Result(column = "indicators", property = "indicators"),
+    })
+    SpeedDO getByAgentIdAndProjectId(@Param("agentId") Long agentId, @Param("projectId") Long projectId);
 }

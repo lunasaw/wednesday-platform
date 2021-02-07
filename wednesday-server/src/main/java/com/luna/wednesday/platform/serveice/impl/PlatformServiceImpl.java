@@ -4,6 +4,7 @@ import com.luna.wednesday.platform.constant.ProjectStatusConstant;
 import com.luna.wednesday.platform.constant.TaskResultStatusConstant;
 import com.luna.wednesday.platform.constant.TaskStatusConstant;
 import com.luna.wednesday.platform.dao.*;
+import com.luna.wednesday.platform.dto.JobResultDTO;
 import com.luna.wednesday.platform.dto.StatusDTO;
 import com.luna.wednesday.platform.entity.*;
 import com.luna.wednesday.platform.serveice.PlatformService;
@@ -296,5 +297,40 @@ public class PlatformServiceImpl implements PlatformService {
         StatusLogDAO.insert(StatusLogDO);
 
         return StatusDO.getId();
+    }
+
+    /**
+     * 记录速度应该是平台行为 但是跟内核算法有关
+     * 
+     * @param sessionKey
+     * @param agentId
+     * @param JobResultDTO
+     */
+    public void submitJobResult(String sessionKey, long agentId, JobResultDTO JobResultDTO) {
+        // 记录speed
+        SpeedDO SpeedDO = new SpeedDO();
+        SpeedDO.setAgentId(agentId);
+        SpeedDO.setProjectId(JobResultDTO.getProjectId());
+        SpeedDO.setTaskSize(JobResultDTO.getTaskResultIdSet().size());
+        SpeedDO.setRunningSecond(JobResultDTO.getRunningSecond());
+        putSpeedDO(SpeedDO);
+    }
+
+    /**
+     * 更新速度应该是平台行为 但是跟内核算法有关
+     * TODO hashcat 为 hashmode + agent 保证速度唯一性 这里使用 agent + projectId 保证唯一性
+     * 
+     * @param SpeedDO
+     */
+    private void putSpeedDO(SpeedDO SpeedDO) {
+        SpeedDO originSpeedDO =
+            SpeedDAO.getByAgentIdAndProjectId(SpeedDO.getAgentId(), SpeedDO.getProjectId());
+        if (originSpeedDO != null) {
+            SpeedDO.setId(originSpeedDO.getId());
+            SpeedDO.setVersion(originSpeedDO.getVersion());
+            SpeedDAO.update(SpeedDO);
+        } else {
+            SpeedDAO.insert(SpeedDO);
+        }
     }
 }

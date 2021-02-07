@@ -6,9 +6,9 @@ import java.util.Date;
  * (tb_task#)
  *
  * @author luna
- * @since 2021/02/03 19:57:21
+ * @since 2021/02/06 16:38:10
  */
-public class TaskDO{
+public class TaskDO {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,10 +24,6 @@ public class TaskDO{
     private Long projectId;
    /** task状态 (Not Null) */
     private String status;
-   /**  (Not Null) */
-    private Long skip;
-   /**  (Not Null) */
-    private Long limit;
 
     public Long getId() {
         return id;
@@ -75,22 +71,6 @@ public class TaskDO{
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
-    }
-
-    public Long getSkip() {
-        return skip;
-    }
-
-    public void setSkip(Long skip) {
-        this.skip = skip;
-    }
-
-    public Long getLimit() {
-        return limit;
-    }
-
-    public void setLimit(Long limit) {
-        this.limit = limit;
     }
 
 
