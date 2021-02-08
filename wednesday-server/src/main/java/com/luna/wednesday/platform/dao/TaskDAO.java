@@ -92,7 +92,7 @@ public interface TaskDAO {
     /**
      * 通过projectId和状态查询Task
      *
-     * @param id
+     * @param projectId
      * @param status
      * @return
      */
@@ -105,7 +105,7 @@ public interface TaskDAO {
         @Result(column = "project_id", property = "projectId"),
         @Result(column = "status", property = "status"),
     })
-    TaskDO getOneByProjectIdAndStatus(@Param("id") Long id, @Param("status") String status);
+    TaskDO getOneByProjectIdAndStatus(@Param("projectId") Long projectId, @Param("status") String status);
 
     /**
      * 通过projectId 项目状态 拿出第一个项目的所有Task

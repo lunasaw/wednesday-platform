@@ -1,5 +1,10 @@
 package com.luna.wednesday.platform.serveice.impl;
 
+import com.iteknical.fusion.user.constant.UserTagNameConstant;
+import com.iteknical.fusion.user.vo.TagVO;
+import com.luna.wednesday.hashcatcore.constant.HashcatProjectStatusConstant;
+import com.luna.wednesday.hashcatcore.entity.HashcatProjectDO;
+import com.luna.wednesday.hashcatcore.entity.HashcatTaskDO;
 import com.luna.wednesday.platform.constant.ProjectStatusConstant;
 import com.luna.wednesday.platform.constant.TaskResultStatusConstant;
 import com.luna.wednesday.platform.constant.TaskStatusConstant;
@@ -24,7 +29,7 @@ import java.util.stream.Collectors;
  * @create: 2021-02-04 15:30
  **/
 @Service
-public class PlatformServiceImpl implements PlatformService {
+public class PlatformBaseService {
 
     @Autowired
     private ProjectDAO    ProjectDAO;
@@ -90,7 +95,7 @@ public class PlatformServiceImpl implements PlatformService {
      * @param taskSize
      * @return
      */
-    private List<TaskDO> listUnfinishedTaskList(int taskSize) {
+    public List<TaskDO> listUnfinishedTaskList(int taskSize) {
         // project上优先派发RUNNING的
         List<ProjectDO> ProjectDOList =
             ProjectDAO.listByStatus(ProjectStatusConstant.RUNNING);
@@ -148,19 +153,22 @@ public class PlatformServiceImpl implements PlatformService {
         // userTools.getOneUserIdBySessionKey(sessionKey);
         // TODO 校验agent是否是这个用户登录的
 
-        // 判断有无初始化Project
+        // 在测试时，只允许打标用户参与运算
+        // if (switchService.isHashcatTest()) {
+        // TagVO tagVO = new TagVO();
+        // tagVO.setName(UserTagNameConstant.IS_PASSWORD_EXPIRE);
+        // if (!userTagSupport.hasTag(sessionKey, tagVO)) {
+        // return false;
+        // }
+        // }
+
         ProjectDO ProjectDO = ProjectDAO.getOneByStatus(ProjectStatusConstant.INIT);
         if (ProjectDO != null) {
             return true;
         }
 
-        // 判断能否拿出一个未完成的任务
         TaskDO TaskDO = getUnfinishedTask();
-        if (TaskDO != null) {
-            return true;
-        }
-
-        return false;
+        return TaskDO != null;
     }
 
     /**

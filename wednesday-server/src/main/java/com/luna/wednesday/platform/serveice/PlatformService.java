@@ -1,5 +1,6 @@
 package com.luna.wednesday.platform.serveice;
 
+import com.luna.wednesday.platform.entity.ProjectDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -33,6 +33,24 @@ public interface HashcatTaskDAO {
     HashcatTaskDO get(@Param("id") Long id);
 
     /**
+     * 根据taskId查询hashcatTask
+     * 
+     * @param taskId
+     * @return
+     */
+    @Select("SELECT  id, task_id, create_time, modified_time, version, skip, limit  FROM tb_hashcat_task WHERE task_id = #{taskId}")
+    @Results({
+        @Result(column = "id", property = "id", id = true),
+        @Result(column = "task_id", property = "taskId"),
+        @Result(column = "create_time", property = "createTime"),
+        @Result(column = "modified_time", property = "modifiedTime"),
+        @Result(column = "version", property = "version"),
+        @Result(column = "skip", property = "skip"),
+        @Result(column = "limit", property = "limit"),
+    })
+    HashcatTaskDO getByTaskId(@Param("taskId") Long taskId);
+
+    /**
      * 单个插入
      *
      * @param hashcatTaskDO HashcatTaskDO

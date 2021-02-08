@@ -114,7 +114,7 @@ public interface ProjectDAO {
      * @param status
      * @return
      */
-    @Select("select  id, create_time, modified_time, version, project_name, project_status, project_lines  from tb_project where WHERE status=#{status}")
+    @Select("select  id, create_time, modified_time, version, project_name, project_status, project_lines  from tb_project where WHERE status=#{status} LIMIT 1")
     @Results({
         @Result(column = "id", property = "id", id = true),
         @Result(column = "create_time", property = "createTime"),
@@ -125,4 +125,22 @@ public interface ProjectDAO {
         @Result(column = "project_lines", property = "projectLines"),
     })
     ProjectDO getOneByStatus(@Param("status") String status);
+
+    /**
+     *
+     * @param status
+     * @param projectId
+     * @return
+     */
+    @Select("select  id, create_time, modified_time, version, project_name, project_status, project_lines  from tb_project where WHERE status=#{status} and project_id=#{projectId}")
+    @Results({
+        @Result(column = "id", property = "id", id = true),
+        @Result(column = "create_time", property = "createTime"),
+        @Result(column = "modified_time", property = "modifiedTime"),
+        @Result(column = "version", property = "version"),
+        @Result(column = "project_name", property = "projectName"),
+        @Result(column = "project_status", property = "projectStatus"),
+        @Result(column = "project_lines", property = "projectLines"),
+    })
+    ProjectDO getOneByStatusAndProjectId(@Param("status") String status, @Param("projectId") Long projectId);
 }

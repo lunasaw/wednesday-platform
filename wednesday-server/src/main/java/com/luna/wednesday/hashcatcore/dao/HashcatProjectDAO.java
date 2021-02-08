@@ -114,4 +114,30 @@ public interface HashcatProjectDAO {
         @Result(column = "lines", property = "lines"),
     })
     HashcatProjectDO getByProjectId(@Param("projectId") Long projectId);
+
+    /**
+     * hashcat 内核参数查询项目
+     * 
+     * @param hashMode
+     * @param attackMode
+     * @param mask
+     * @return
+     */
+    @Select("SELECT  id, project_id, create_time, modified_time, version, mask, keyspace, hash_mode, attack_mode, hash_id, lines  FROM tb_hashcat_project WHERE  hash_mode=#{hashMode} AND attack_mode=#{attackMode} AND mask=#{mask}")
+    @Results({
+        @Result(column = "id", property = "id", id = true),
+        @Result(column = "project_id", property = "projectId"),
+        @Result(column = "create_time", property = "createTime"),
+        @Result(column = "modified_time", property = "modifiedTime"),
+        @Result(column = "version", property = "version"),
+        @Result(column = "mask", property = "mask"),
+        @Result(column = "keyspace", property = "keyspace"),
+        @Result(column = "hash_mode", property = "hashMode"),
+        @Result(column = "attack_mode", property = "attackMode"),
+        @Result(column = "hash_id", property = "hashId"),
+        @Result(column = "lines", property = "lines"),
+    })
+    List<HashcatProjectDO> listByHashModeAndAttackModeAndMask(@Param("hashMode") int hashMode,
+        @Param("attackMode") int attackMode, @Param("mask") String mask);
+
 }
