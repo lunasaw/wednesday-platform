@@ -17,7 +17,7 @@ public interface ProjectStatusConstant {
     /** 完成 */
     String FINISH               = "finish";
     /** hash已处理 */
-    //String PROCESSED            = "processed";
+    // String PROCESSED = "processed";
     /** 终止 */
     String TERMINATE            = "terminate";
 }

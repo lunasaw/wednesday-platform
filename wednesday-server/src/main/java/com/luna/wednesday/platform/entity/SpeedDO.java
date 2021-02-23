@@ -8,28 +8,28 @@ import java.util.Date;
  * @author luna
  * @since 2021/02/03 19:57:21
  */
-public class SpeedDO{
+public class SpeedDO {
 
     private static final long serialVersionUID = 1L;
 
-   /**  (Not Null) */
-    private Long id;
-   /**  (Not Null) */
-    private Date createTime;
-   /**  (Not Null) */
-    private Date modifiedTime;
-   /**  (Not Null) */
-    private Integer version;
-   /** 项目id (Not Null) */
-    private Long projectId;
-   /** 设备id (Not Null) */
-    private Long agentId;
-   /**  (Not Null) */
-    private Integer taskSize;
-   /**  (Not Null) */
-    private Integer runningSecond;
-   /**  */
-    private String indicators;
+    /** (Not Null) */
+    private Long              id;
+    /** (Not Null) */
+    private Date              createTime;
+    /** (Not Null) */
+    private Date              modifiedTime;
+    /** (Not Null) */
+    private Integer           version;
+    /** 项目id (Not Null) */
+    private Long              projectId;
+    /** 设备id (Not Null) */
+    private Long              agentId;
+    /** (Not Null) */
+    private Integer           taskSize;
+    /** (Not Null) */
+    private Integer           runningSecond;
+    /**  */
+    private String            indicators;
 
     public Long getId() {
         return id;
@@ -102,6 +102,5 @@ public class SpeedDO{
     public void setIndicators(String indicators) {
         this.indicators = indicators == null ? null : indicators.trim();
     }
-
 
 }

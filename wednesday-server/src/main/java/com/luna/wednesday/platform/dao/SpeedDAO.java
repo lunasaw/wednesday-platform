@@ -63,7 +63,7 @@ public interface SpeedDAO {
      *
      * @param speedDO
      */
-    @Update("update tb_speed set id = #{id}, create_time = #{createTime}, modified_time = now(), version = version + 1, project_id = #{projectId}, agent_id = #{agentId}, task_size = #{taskSize}, running_second = #{runningSecond}, indicators = #{indicators} where id = #{id} and version=#{version}")
+    @Update("update tb_speed set id = #{id}, modified_time = now(), version = version + 1, project_id = #{projectId}, agent_id = #{agentId}, task_size = #{taskSize}, running_second = #{runningSecond}, indicators = #{indicators} where id = #{id} and version=#{version}")
     void update(SpeedDO speedDO);
 
     /**

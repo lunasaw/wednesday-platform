@@ -6,26 +6,26 @@ import java.util.Date;
  * (tb_project#)
  *
  * @author luna
- * @since 2021/02/04 15:01:59
+ * @since 2021/02/23 22:37:35
  */
 public class ProjectDO {
 
     private static final long serialVersionUID = 1L;
 
-   /** id (Not Null) */
-    private Long id;
-   /** 创建时间 (Not Null) */
-    private Date createTime;
-   /** 修改时间 (Not Null) */
-    private Date modifiedTime;
-   /** 版本 (Not Null) */
-    private Integer version;
-   /** 项目名 (Not Null) */
-    private String projectName;
-   /** 状态 (Not Null) */
-    private String projectStatus;
-   /** 计算行数 (Not Null) */
-    private Long projectLines;
+    /** id (Not Null) */
+    private Long              id;
+    /** 创建时间 (Not Null) */
+    private Date              createTime;
+    /** 修改时间 (Not Null) */
+    private Date              modifiedTime;
+    /** 版本 (Not Null) */
+    private Integer           version;
+    /** 项目名 (Not Null) */
+    private String            name;
+    /** 状态 (Not Null) */
+    private String            status;
+    /** 扩展 (Not Null) */
+    private String            content;
 
     public Long getId() {
         return id;
@@ -59,29 +59,40 @@ public class ProjectDO {
         this.version = version;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public String getName() {
+        return name;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName == null ? null : projectName.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
-    public String getProjectStatus() {
-        return projectStatus;
+    public String getStatus() {
+        return status;
     }
 
-    public void setProjectStatus(String projectStatus) {
-        this.projectStatus = projectStatus == null ? null : projectStatus.trim();
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 
-    public Long getProjectLines() {
-        return projectLines;
+    public String getContent() {
+        return content;
     }
 
-    public void setProjectLines(Long projectLines) {
-        this.projectLines = projectLines;
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
     }
 
-
+    @Override
+    public String toString() {
+        return "ProjectDO{" +
+            "id=" + id +
+            ", createTime=" + createTime +
+            ", modifiedTime=" + modifiedTime +
+            ", version=" + version +
+            ", name='" + name + '\'' +
+            ", status='" + status + '\'' +
+            ", content='" + content + '\'' +
+            '}';
+    }
 }

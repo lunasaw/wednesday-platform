@@ -8,18 +8,18 @@ import java.util.Date;
  * @author luna
  * @since 2021/02/04 15:38:44
  */
-public class StatusLogDO{
+public class StatusLogDO {
 
     private static final long serialVersionUID = 1L;
 
-   /**  (Not Null) */
-    private Long id;
-   /**  (Not Null) */
-    private Date createTime;
-   /**  (Not Null) */
-    private Long agentId;
-   /**  (Not Null) */
-    private String content;
+    /** (Not Null) */
+    private Long              id;
+    /** (Not Null) */
+    private Date              createTime;
+    /** (Not Null) */
+    private Long              agentId;
+    /** (Not Null) */
+    private String            content;
 
     public Long getId() {
         return id;
@@ -52,6 +52,5 @@ public class StatusLogDO{
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
     }
-
 
 }

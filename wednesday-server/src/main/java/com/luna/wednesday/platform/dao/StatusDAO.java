@@ -5,6 +5,7 @@ import java.util.List;
 import com.luna.wednesday.platform.entity.StatusDO;
 import org.apache.ibatis.annotations.*;
 
+
 /**
  * (tb_status).
  *
@@ -58,7 +59,7 @@ public interface StatusDAO {
      *
      * @param statusDO
      */
-    @Update("update tb_status set id = #{id}, create_time = #{createTime}, modified_time = now(), version = version, agent_id = #{agentId}, content = #{content} where id = #{id} and version=#{version}")
+    @Update("update tb_status set id = #{id}, modified_time = now(), version = version, agent_id = #{agentId}, content = #{content} where id = #{id} and version=#{version}")
     void update(StatusDO statusDO);
 
     /**

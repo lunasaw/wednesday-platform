@@ -1,10 +1,8 @@
 package com.luna.wednesday.platform.serveice.impl;
 
-import com.iteknical.fusion.user.constant.UserTagNameConstant;
-import com.iteknical.fusion.user.vo.TagVO;
-import com.luna.wednesday.hashcatcore.constant.HashcatProjectStatusConstant;
-import com.luna.wednesday.hashcatcore.entity.HashcatProjectDO;
-import com.luna.wednesday.hashcatcore.entity.HashcatTaskDO;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.luna.wednesday.platform.constant.ProjectStatusConstant;
 import com.luna.wednesday.platform.constant.TaskResultStatusConstant;
 import com.luna.wednesday.platform.constant.TaskStatusConstant;
@@ -12,15 +10,13 @@ import com.luna.wednesday.platform.dao.*;
 import com.luna.wednesday.platform.dto.JobResultDTO;
 import com.luna.wednesday.platform.dto.StatusDTO;
 import com.luna.wednesday.platform.entity.*;
-import com.luna.wednesday.platform.serveice.PlatformService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 /**
  * @program: wednesday-platform
@@ -32,15 +28,15 @@ import java.util.stream.Collectors;
 public class PlatformBaseService {
 
     @Autowired
-    private ProjectDAO    ProjectDAO;
+    private com.luna.wednesday.platform.dao.ProjectDAO    ProjectDAO;
     @Autowired
-    private TaskDAO       TaskDAO;
+    private com.luna.wednesday.platform.dao.TaskDAO       TaskDAO;
     @Autowired
-    private TaskResultDAO TaskResultDAO;
+    private com.luna.wednesday.platform.dao.TaskResultDAO TaskResultDAO;
     @Autowired
-    private StatusDAO     StatusDAO;
+    private com.luna.wednesday.platform.dao.StatusDAO     StatusDAO;
     @Autowired
-    private StatusLogDAO  StatusLogDAO;
+    private com.luna.wednesday.platform.dao.StatusLogDAO  StatusLogDAO;
     @Autowired
     private SpeedDAO      SpeedDAO;
 
@@ -183,7 +179,7 @@ public class PlatformBaseService {
             ProjectDOList.forEach(ProjectDO -> {
                 // TODO 这里原来有 ProjectDO.getKeyspace() == null 条件
                 if (ProjectDO.getModifiedTime().before(DateTime.now().minusMinutes(1).toDate())) {
-                    ProjectDO.setProjectStatus(ProjectStatusConstant.INIT);
+                    ProjectDO.setStatus(ProjectStatusConstant.INIT);
                     ProjectDAO.update(ProjectDO);
                 }
             });
@@ -203,7 +199,7 @@ public class PlatformBaseService {
             ProjectDOList.forEach(ProjectDO -> {
                 // TODO CoreServiceImpl.createTasks(ProjectDO);
                 // 更新project状态
-                ProjectDO.setProjectStatus(ProjectStatusConstant.WAIT);
+                ProjectDO.setStatus(ProjectStatusConstant.WAIT);
                 ProjectDAO.update(ProjectDO);
             });
         }
@@ -221,7 +217,7 @@ public class PlatformBaseService {
             // 如果没有一个task不是FINISH状态，说明所有task都是FINISH，说明project是FINISH
             if (null == TaskDAO.getOneByProjectIdAndNotStatus(ProjectDO.getId(),
                 TaskStatusConstant.FINISH)) {
-                ProjectDO.setProjectStatus(ProjectStatusConstant.FINISH);
+                ProjectDO.setStatus(ProjectStatusConstant.FINISH);
                 ProjectDAO.update(ProjectDO);
             }
         });

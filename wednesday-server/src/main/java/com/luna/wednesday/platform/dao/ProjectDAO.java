@@ -4,32 +4,32 @@ import java.util.List;
 
 import com.luna.wednesday.platform.entity.ProjectDO;
 import org.apache.ibatis.annotations.*;
-import org.apache.ibatis.type.JdbcType;
+
 
 /**
  * (tb_project).
  *
  * @author luna
- * @since 2021/02/03 19:40:18
+ * @since 2021/02/23 22:37:35
  */
 @Mapper
 public interface ProjectDAO {
 
     /**
-     * 状态批量查询
-     * 
+     * 根据状态查询
+     *
      * @param status
-     * @return
+     * @return ProjectDO
      */
-    @Select("select  id, create_time, modified_time, version, project_name, project_status, project_lines  from tb_project where status=#{status}")
+    @Select("SELECT  id, create_time, modified_time, version, name, status, content  FROM tb_project WHERE status = #{status}")
     @Results({
         @Result(column = "id", property = "id", id = true),
         @Result(column = "create_time", property = "createTime"),
         @Result(column = "modified_time", property = "modifiedTime"),
         @Result(column = "version", property = "version"),
-        @Result(column = "project_name", property = "projectName"),
-        @Result(column = "project_status", property = "projectStatus"),
-        @Result(column = "project_lines", property = "projectLines"),
+        @Result(column = "name", property = "name"),
+        @Result(column = "status", property = "status"),
+        @Result(column = "content", property = "content"),
     })
     List<ProjectDO> listByStatus(@Param("status") String status);
 
@@ -39,15 +39,15 @@ public interface ProjectDAO {
      * @param id
      * @return ProjectDO
      */
-    @Select("select  id, create_time, modified_time, version, project_name, project_status, project_lines  from tb_project where id = #{id}")
+    @Select("SELECT  id, create_time, modified_time, version, name, status, content  FROM tb_project WHERE id = #{id}")
     @Results({
         @Result(column = "id", property = "id", id = true),
         @Result(column = "create_time", property = "createTime"),
         @Result(column = "modified_time", property = "modifiedTime"),
         @Result(column = "version", property = "version"),
-        @Result(column = "project_name", property = "projectName"),
-        @Result(column = "project_status", property = "projectStatus"),
-        @Result(column = "project_lines", property = "projectLines"),
+        @Result(column = "name", property = "name"),
+        @Result(column = "status", property = "status"),
+        @Result(column = "content", property = "content"),
     })
     ProjectDO get(@Param("id") Long id);
 
@@ -57,8 +57,8 @@ public interface ProjectDAO {
      * @param projectDO ProjectDO
      * @return
      */
-    @Insert("insert into tb_project(create_time, modified_time, version, project_name, project_status, project_lines) "
-        + "values(now(), now(), 0, #{projectName}, #{projectStatus}, #{projectLines})")
+    @Insert("INSERT INTO tb_project(create_time, modified_time, version, name, status, content) "
+        + "VALUES (now(), now(), 0, #{name}, #{status}, #{content})")
     @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "id", before = false, resultType = Long.class)
     int insert(ProjectDO projectDO);
 
@@ -67,9 +67,9 @@ public interface ProjectDAO {
      *
      * @param list ProjectDO列表
      */
-    @Insert("<script>insert into tb_project(create_time, modified_time, version, project_name, project_status, project_lines) values "
+    @Insert("<script>INSERT INTO tb_project(create_time, modified_time, version, name, status, content) VALUES "
         + "<foreach collection='list' index='index' item='n' separator=','> "
-        + "(now(), now(), 0, #{n.projectName}, #{n.projectStatus}, #{n.projectLines})"
+        + "(now(), now(), 0, #{n.name}, #{n.status}, #{n.content})"
         + "</foreach></script>")
     void insertBatch(@Param("list") List<ProjectDO> list);
 
@@ -78,7 +78,7 @@ public interface ProjectDAO {
      *
      * @param projectDO
      */
-    @Update("update tb_project set id = #{id}, create_time = #{createTime}, modified_time = now(), version = version, project_name = #{projectName}, project_status = #{projectStatus}, project_lines = #{projectLines} where id = #{id} and version=#{version}")
+    @Update("UPDATE tb_project SET id = #{id}, modified_time = now(), version = version+1, name = #{name}, status = #{status}, content = #{content} WHERE id = #{id} and version = #{version}")
     void update(ProjectDO projectDO);
 
     /**
@@ -86,7 +86,7 @@ public interface ProjectDAO {
      *
      * @param id id
      */
-    @Delete("delete from tb_project where id = #{id}")
+    @Delete("DELETE FROM tb_project WHERE id = #{id}")
     void delete(@Param("id") Long id);
 
     /**
@@ -94,7 +94,7 @@ public interface ProjectDAO {
      *
      * @param ids ids
      */
-    @Delete("<script>delete from tb_project where id in "
+    @Delete("<script>DELETE FROM tb_project WHERE ID IN "
         + "<foreach collection='ids' index='index' item='id' open='(' separator=',' close=')'>"
         + "#{id}"
         + "</foreach></script>")
@@ -105,42 +105,24 @@ public interface ProjectDAO {
      *
      * @return 数量
      */
-    @Select("select count(*) from tb_project")
+    @Select("SELECT COUNT(*) FROM tb_project")
     int count();
 
     /**
      * 状态查询project
-     * 
-     * @param status
-     * @return
-     */
-    @Select("select  id, create_time, modified_time, version, project_name, project_status, project_lines  from tb_project where WHERE status=#{status} LIMIT 1")
-    @Results({
-        @Result(column = "id", property = "id", id = true),
-        @Result(column = "create_time", property = "createTime"),
-        @Result(column = "modified_time", property = "modifiedTime"),
-        @Result(column = "version", property = "version"),
-        @Result(column = "project_name", property = "projectName"),
-        @Result(column = "project_status", property = "projectStatus"),
-        @Result(column = "project_lines", property = "projectLines"),
-    })
-    ProjectDO getOneByStatus(@Param("status") String status);
-
-    /**
      *
      * @param status
-     * @param projectId
      * @return
      */
-    @Select("select  id, create_time, modified_time, version, project_name, project_status, project_lines  from tb_project where WHERE status=#{status} and project_id=#{projectId}")
+    @Select("SELECT  id, create_time, modified_time, version, name, status, content  FROM tb_project WHERE status=#{status} LIMIT 1")
     @Results({
         @Result(column = "id", property = "id", id = true),
         @Result(column = "create_time", property = "createTime"),
         @Result(column = "modified_time", property = "modifiedTime"),
         @Result(column = "version", property = "version"),
-        @Result(column = "project_name", property = "projectName"),
-        @Result(column = "project_status", property = "projectStatus"),
-        @Result(column = "project_lines", property = "projectLines"),
+        @Result(column = "name", property = "name"),
+        @Result(column = "status", property = "status"),
+        @Result(column = "content", property = "content"),
     })
-    ProjectDO getOneByStatusAndProjectId(@Param("status") String status, @Param("projectId") Long projectId);
+    ProjectDO getOneByStatus(@Param("status") String status);
 }

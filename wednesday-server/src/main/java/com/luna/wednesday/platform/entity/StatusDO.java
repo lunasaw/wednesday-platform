@@ -8,22 +8,22 @@ import java.util.Date;
  * @author luna
  * @since 2021/02/04 15:35:58
  */
-public class StatusDO{
+public class StatusDO {
 
     private static final long serialVersionUID = 1L;
 
-   /**  (Not Null) */
-    private Long id;
-   /**  (Not Null) */
-    private Date createTime;
-   /**  (Not Null) */
-    private Date modifiedTime;
-   /**  (Not Null) */
-    private Integer version;
-   /**  (Not Null) */
-    private Long agentId;
-   /**  (Not Null) */
-    private String content;
+    /** (Not Null) */
+    private Long              id;
+    /** (Not Null) */
+    private Date              createTime;
+    /** (Not Null) */
+    private Date              modifiedTime;
+    /** (Not Null) */
+    private Integer           version;
+    /** (Not Null) */
+    private Long              agentId;
+    /** (Not Null) */
+    private String            content;
 
     public Long getId() {
         return id;
@@ -72,6 +72,5 @@ public class StatusDO{
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
     }
-
 
 }

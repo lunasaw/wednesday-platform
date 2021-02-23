@@ -8,26 +8,26 @@ import java.util.Date;
  * @author luna
  * @since 2021/02/03 19:57:21
  */
-public class TaskResultDO{
+public class TaskResultDO {
 
     private static final long serialVersionUID = 1L;
 
-   /** id (Not Null) */
-    private Long id;
-   /** 创建时间 (Not Null) */
-    private Date createTime;
-   /** 修改时间 (Not Null) */
-    private Date modifiedTime;
-   /** 版本 (Not Null) */
-    private Integer version;
-   /** task_id (Not Null) */
-    private Long taskId;
-   /** agent_id (Not Null) */
-    private Long agentId;
-   /** 状态 (Not Null) */
-    private String status;
-   /** 单个task结果 */
-    private String result;
+    /** id (Not Null) */
+    private Long              id;
+    /** 创建时间 (Not Null) */
+    private Date              createTime;
+    /** 修改时间 (Not Null) */
+    private Date              modifiedTime;
+    /** 版本 (Not Null) */
+    private Integer           version;
+    /** task_id (Not Null) */
+    private Long              taskId;
+    /** agent_id (Not Null) */
+    private Long              agentId;
+    /** 状态 (Not Null) */
+    private String            status;
+    /** 单个task结果 */
+    private String            result;
 
     public Long getId() {
         return id;
@@ -92,6 +92,5 @@ public class TaskResultDO{
     public void setResult(String result) {
         this.result = result == null ? null : result.trim();
     }
-
 
 }

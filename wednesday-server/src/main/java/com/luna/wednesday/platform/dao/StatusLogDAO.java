@@ -5,6 +5,7 @@ import java.util.List;
 import com.luna.wednesday.platform.entity.StatusLogDO;
 import org.apache.ibatis.annotations.*;
 
+
 /**
  * (tb_status_log).
  *
@@ -12,8 +13,7 @@ import org.apache.ibatis.annotations.*;
  * @since 2021/02/04 15:38:44
  */
 @Mapper
-public interface StatusLogDAO{
-
+public interface StatusLogDAO {
 
     /**
      * 根据id查询
@@ -23,12 +23,12 @@ public interface StatusLogDAO{
      */
     @Select("select  id, create_time, agent_id, content  from tb_status_log where id = #{id}")
     @Results({
-    	@Result(column = "id",property= "id", id = true),
-		@Result(column = "create_time",property="createTime"),
-		@Result(column = "agent_id",property="agentId"),
-		@Result(column = "content",property="content"),
-		})
-    StatusLogDO get(@Param("id")Long  id);
+        @Result(column = "id", property = "id", id = true),
+        @Result(column = "create_time", property = "createTime"),
+        @Result(column = "agent_id", property = "agentId"),
+        @Result(column = "content", property = "content"),
+    })
+    StatusLogDO get(@Param("id") Long id);
 
     /**
      * 单个插入
@@ -57,8 +57,8 @@ public interface StatusLogDAO{
      *
      * @param statusLogDO
      */
-    @Update("update tb_status_log set id = #{id}, create_time = #{createTime}, agent_id = #{agentId}, content = #{content} where id = #{id}")
-    void update(StatusLogDO  statusLogDO);
+    @Update("update tb_status_log set id = #{id}, agent_id = #{agentId}, content = #{content} where id = #{id}")
+    void update(StatusLogDO statusLogDO);
 
     /**
      * 单个删除

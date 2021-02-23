@@ -1,31 +1,31 @@
-package com.luna.wednesday.hashcatcore.entity;
+package com.luna.wednesday.platform.entity;
 
 import java.util.Date;
 
 /**
- * (tb_hashcat_task#)
+ * (tb_hash#)
  *
  * @author luna
- * @since 2021/02/06 16:55:24
+ * @since 2021/02/23 22:51:06
  */
-public class HashcatTaskDO {
+public class HashDO {
 
     private static final long serialVersionUID = 1L;
 
-    /** hashcat 任务编号 (Not Null) */
+    /** (Not Null) */
     private Long              id;
-    /** 平台任务编号 (Not Null) */
-    private Long              taskId;
-    /** 创建时间 (Not Null) */
+    /** (Not Null) */
     private Date              createTime;
-    /** 修改时间 (Not Null) */
+    /** (Not Null) */
     private Date              modifiedTime;
-    /** 版本 (Not Null) */
+    /** (Not Null) */
     private Integer           version;
     /** (Not Null) */
-    private Long              skip;
-    /** (Not Null) */
-    private Long              limit;
+    private String            name;
+    /**  */
+    private String            left;
+    /**  */
+    private String            found;
 
     public Long getId() {
         return id;
@@ -33,14 +33,6 @@ public class HashcatTaskDO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId(Long taskId) {
-        this.taskId = taskId;
     }
 
     public Date getCreateTime() {
@@ -67,20 +59,28 @@ public class HashcatTaskDO {
         this.version = version;
     }
 
-    public Long getSkip() {
-        return skip;
+    public String getName() {
+        return name;
     }
 
-    public void setSkip(Long skip) {
-        this.skip = skip;
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
-    public Long getLimit() {
-        return limit;
+    public String getLeft() {
+        return left;
     }
 
-    public void setLimit(Long limit) {
-        this.limit = limit;
+    public void setLeft(String left) {
+        this.left = left == null ? null : left.trim();
+    }
+
+    public String getFound() {
+        return found;
+    }
+
+    public void setFound(String found) {
+        this.found = found == null ? null : found.trim();
     }
 
 }

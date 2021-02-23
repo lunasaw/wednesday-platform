@@ -13,8 +13,7 @@ import org.apache.ibatis.annotations.*;
  * @since 2021/02/03 19:57:21
  */
 @Mapper
-public interface TaskResultDAO{
-
+public interface TaskResultDAO {
 
     /**
      * 根据id查询
@@ -24,16 +23,16 @@ public interface TaskResultDAO{
      */
     @Select("select id, create_time, modified_time, version, task_id, agent_id, status, result from tb_task_result where id = #{id}")
     @Results({
-    	@Result(column = "id",property= "id", id = true),
-		@Result(column = "create_time",property="createTime"),
-		@Result(column = "modified_time",property="modifiedTime"),
-		@Result(column = "version",property="version"),
-		@Result(column = "task_id",property="taskId"),
-		@Result(column = "agent_id",property="agentId"),
-		@Result(column = "status",property="status"),
-		@Result(column = "result",property="result"),
-		})
-    TaskResultDO get(@Param("id")Long  id);
+        @Result(column = "id", property = "id", id = true),
+        @Result(column = "create_time", property = "createTime"),
+        @Result(column = "modified_time", property = "modifiedTime"),
+        @Result(column = "version", property = "version"),
+        @Result(column = "task_id", property = "taskId"),
+        @Result(column = "agent_id", property = "agentId"),
+        @Result(column = "status", property = "status"),
+        @Result(column = "result", property = "result"),
+    })
+    TaskResultDO get(@Param("id") Long id);
 
     /**
      * 单个插入
@@ -62,7 +61,7 @@ public interface TaskResultDAO{
      *
      * @param taskResultDO
      */
-    @Update("update tb_task_result set id = #{id}, create_time = #{createTime}, modified_time = now(), version = version, task_id = #{taskId}, agent_id = #{agentId}, status = #{status}, result = #{result} where id = #{id} and version=#{version}")
+    @Update("update tb_task_result set id = #{id}, modified_time = now(), version = version, task_id = #{taskId}, agent_id = #{agentId}, status = #{status}, result = #{result} where id = #{id} and version=#{version}")
     void update(TaskResultDO taskResultDO);
 
     /**
