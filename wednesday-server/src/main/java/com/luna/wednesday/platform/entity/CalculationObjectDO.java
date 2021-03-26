@@ -3,12 +3,12 @@ package com.luna.wednesday.platform.entity;
 import java.util.Date;
 
 /**
- * (tb_hash#)
+ * (tb_calculation_object#)
  *
  * @author luna
- * @since 2021/02/23 22:51:06
+ * @since 2021/02/24 16:32:55
  */
-public class HashDO {
+public class CalculationObjectDO {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,11 +21,20 @@ public class HashDO {
     /** (Not Null) */
     private Integer           version;
     /** (Not Null) */
-    private String            name;
+    private String            type;
     /**  */
-    private String            left;
+    private String            content;
     /**  */
-    private String            found;
+    private String            remarks;
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public CalculationObjectDO setRemarks(String remarks) {
+        this.remarks = remarks;
+        return this;
+    }
 
     public Long getId() {
         return id;
@@ -59,28 +68,20 @@ public class HashDO {
         this.version = version;
     }
 
-    public String getName() {
-        return name;
+    public String getType() {
+        return type;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
     }
 
-    public String getLeft() {
-        return left;
+    public String getContent() {
+        return content;
     }
 
-    public void setLeft(String left) {
-        this.left = left == null ? null : left.trim();
-    }
-
-    public String getFound() {
-        return found;
-    }
-
-    public void setFound(String found) {
-        this.found = found == null ? null : found.trim();
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
     }
 
 }

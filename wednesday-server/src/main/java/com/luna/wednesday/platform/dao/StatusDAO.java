@@ -2,9 +2,9 @@ package com.luna.wednesday.platform.dao;
 
 import java.util.List;
 
-import com.luna.wednesday.platform.entity.StatusDO;
 import org.apache.ibatis.annotations.*;
 
+import com.luna.wednesday.platform.entity.StatusDO;
 
 /**
  * (tb_status).
@@ -40,7 +40,7 @@ public interface StatusDAO {
      */
     @Insert("insert into tb_status(create_time, modified_time, version, agent_id, content) "
         + "values(now(), now(), 0, #{agentId}, #{content})")
-    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "id", before = false, resultType = Integer.class)
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     int insert(StatusDO statusDO);
 
     /**

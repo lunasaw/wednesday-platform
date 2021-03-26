@@ -2,9 +2,9 @@ package com.luna.wednesday.platform.dao;
 
 import java.util.List;
 
-import com.luna.wednesday.platform.entity.TaskResultDO;
 import org.apache.ibatis.annotations.*;
 
+import com.luna.wednesday.platform.entity.TaskResultDO;
 
 /**
  * (tb_task_result).
@@ -42,7 +42,7 @@ public interface TaskResultDAO {
      */
     @Insert("insert into tb_task_result(create_time, modified_time, version, task_id, agent_id, status, result) "
         + "values(now(), now(), 0, #{taskId}, #{agentId}, #{status}, #{result})")
-    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "id", before = false, resultType = Integer.class)
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     int insert(TaskResultDO taskResultDO);
 
     /**

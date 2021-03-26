@@ -23,7 +23,7 @@
 		</encoder>
 	</appender>
 
-	<logger name="com.iteknical.wednesday" additivity="false" level="INFO">
+	<logger name="com.luna.wednesday" additivity="false" level="INFO">
         <appender-ref ref="serverLog"/>
     </logger>
 

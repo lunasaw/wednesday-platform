@@ -2,10 +2,10 @@ package com.luna.wednesday.platform.dao;
 
 import java.util.List;
 
-import com.luna.wednesday.platform.entity.SpeedDO;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
+import com.luna.wednesday.platform.entity.SpeedDO;
 
 /**
  * (tb_speed).
@@ -44,7 +44,7 @@ public interface SpeedDAO {
      */
     @Insert("insert into tb_speed(create_time, modified_time, version, project_id, agent_id, task_size, running_second, indicators) "
         + "values(now(), now(), 0, #{projectId}, #{agentId}, #{taskSize}, #{runningSecond}, #{indicators})")
-    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "id", before = false, resultType = Integer.class)
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     int insert(SpeedDO speedDO);
 
     /**

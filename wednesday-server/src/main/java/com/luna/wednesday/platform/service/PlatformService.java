@@ -1,7 +1,14 @@
-package com.luna.wednesday.platform.serveice.impl;
+package com.luna.wednesday.platform.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
 import com.luna.wednesday.platform.constant.ProjectStatusConstant;
 import com.luna.wednesday.platform.constant.TaskResultStatusConstant;
@@ -10,13 +17,6 @@ import com.luna.wednesday.platform.dao.*;
 import com.luna.wednesday.platform.dto.JobResultDTO;
 import com.luna.wednesday.platform.dto.StatusDTO;
 import com.luna.wednesday.platform.entity.*;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.joda.time.DateTime;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
-
 
 /**
  * @program: wednesday-platform
@@ -25,18 +25,18 @@ import org.springframework.stereotype.Service;
  * @create: 2021-02-04 15:30
  **/
 @Service
-public class PlatformBaseService {
+public class PlatformService {
 
     @Autowired
-    private com.luna.wednesday.platform.dao.ProjectDAO    ProjectDAO;
+    private ProjectDAO    ProjectDAO;
     @Autowired
-    private com.luna.wednesday.platform.dao.TaskDAO       TaskDAO;
+    private TaskDAO       TaskDAO;
     @Autowired
-    private com.luna.wednesday.platform.dao.TaskResultDAO TaskResultDAO;
+    private TaskResultDAO TaskResultDAO;
     @Autowired
-    private com.luna.wednesday.platform.dao.StatusDAO     StatusDAO;
+    private StatusDAO     StatusDAO;
     @Autowired
-    private com.luna.wednesday.platform.dao.StatusLogDAO  StatusLogDAO;
+    private StatusLogDAO  StatusLogDAO;
     @Autowired
     private SpeedDAO      SpeedDAO;
 

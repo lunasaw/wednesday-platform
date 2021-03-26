@@ -2,9 +2,9 @@ package com.luna.wednesday.platform.dao;
 
 import java.util.List;
 
-import com.luna.wednesday.platform.entity.ProjectDO;
 import org.apache.ibatis.annotations.*;
 
+import com.luna.wednesday.platform.entity.ProjectDO;
 
 /**
  * (tb_project).
@@ -21,7 +21,7 @@ public interface ProjectDAO {
      * @param status
      * @return ProjectDO
      */
-    @Select("SELECT  id, create_time, modified_time, version, name, status, content  FROM tb_project WHERE status = #{status}")
+    @Select("SELECT  id, create_time, modified_time, version, name, status, content, remarks  FROM tb_project WHERE status = #{status}")
     @Results({
         @Result(column = "id", property = "id", id = true),
         @Result(column = "create_time", property = "createTime"),
@@ -30,6 +30,7 @@ public interface ProjectDAO {
         @Result(column = "name", property = "name"),
         @Result(column = "status", property = "status"),
         @Result(column = "content", property = "content"),
+        @Result(column = "remarks", property = "remarks"),
     })
     List<ProjectDO> listByStatus(@Param("status") String status);
 
@@ -39,7 +40,7 @@ public interface ProjectDAO {
      * @param id
      * @return ProjectDO
      */
-    @Select("SELECT  id, create_time, modified_time, version, name, status, content  FROM tb_project WHERE id = #{id}")
+    @Select("SELECT  id, create_time, modified_time, version, name, status, content, remarks  FROM tb_project WHERE id = #{id}")
     @Results({
         @Result(column = "id", property = "id", id = true),
         @Result(column = "create_time", property = "createTime"),
@@ -48,6 +49,7 @@ public interface ProjectDAO {
         @Result(column = "name", property = "name"),
         @Result(column = "status", property = "status"),
         @Result(column = "content", property = "content"),
+        @Result(column = "remarks", property = "remarks"),
     })
     ProjectDO get(@Param("id") Long id);
 
@@ -57,9 +59,9 @@ public interface ProjectDAO {
      * @param projectDO ProjectDO
      * @return
      */
-    @Insert("INSERT INTO tb_project(create_time, modified_time, version, name, status, content) "
-        + "VALUES (now(), now(), 0, #{name}, #{status}, #{content})")
-    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "id", before = false, resultType = Long.class)
+    @Insert("INSERT INTO tb_project(create_time, modified_time, version, name, status, content, remarks) "
+        + "VALUES (now(), now(), 0, #{name}, #{status}, #{content}, #{remarks})")
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     int insert(ProjectDO projectDO);
 
     /**
@@ -67,9 +69,9 @@ public interface ProjectDAO {
      *
      * @param list ProjectDO列表
      */
-    @Insert("<script>INSERT INTO tb_project(create_time, modified_time, version, name, status, content) VALUES "
+    @Insert("<script>INSERT INTO tb_project(create_time, modified_time, version, name, status, content, remarks) VALUES "
         + "<foreach collection='list' index='index' item='n' separator=','> "
-        + "(now(), now(), 0, #{n.name}, #{n.status}, #{n.content})"
+        + "(now(), now(), 0, #{n.name}, #{n.status}, #{n.content}, #{n.remarks})"
         + "</foreach></script>")
     void insertBatch(@Param("list") List<ProjectDO> list);
 
@@ -78,7 +80,7 @@ public interface ProjectDAO {
      *
      * @param projectDO
      */
-    @Update("UPDATE tb_project SET id = #{id}, modified_time = now(), version = version+1, name = #{name}, status = #{status}, content = #{content} WHERE id = #{id} and version = #{version}")
+    @Update("UPDATE tb_project SET id = #{id}, modified_time = now(), version = version+1, name = #{name}, status = #{status}, content = #{content}, remarks=#{remarks} WHERE id = #{id} and version = #{version}")
     void update(ProjectDO projectDO);
 
     /**
@@ -114,7 +116,7 @@ public interface ProjectDAO {
      * @param status
      * @return
      */
-    @Select("SELECT  id, create_time, modified_time, version, name, status, content  FROM tb_project WHERE status=#{status} LIMIT 1")
+    @Select("SELECT  id, create_time, modified_time, version, name, status, content, remarks  FROM tb_project WHERE status=#{status} LIMIT 1")
     @Results({
         @Result(column = "id", property = "id", id = true),
         @Result(column = "create_time", property = "createTime"),
@@ -123,6 +125,7 @@ public interface ProjectDAO {
         @Result(column = "name", property = "name"),
         @Result(column = "status", property = "status"),
         @Result(column = "content", property = "content"),
+        @Result(column = "remarks", property = "remarks"),
     })
     ProjectDO getOneByStatus(@Param("status") String status);
 }

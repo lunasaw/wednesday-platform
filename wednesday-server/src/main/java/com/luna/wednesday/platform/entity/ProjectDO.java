@@ -26,6 +26,17 @@ public class ProjectDO {
     private String            status;
     /** 扩展 (Not Null) */
     private String            content;
+    /**  */
+    private String            remarks;
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public ProjectDO setRemarks(String remarks) {
+        this.remarks = remarks;
+        return this;
+    }
 
     public Long getId() {
         return id;
