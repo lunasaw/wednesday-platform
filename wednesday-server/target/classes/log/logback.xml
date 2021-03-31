@@ -13,22 +13,22 @@
 	</appender>
 
 	<appender name="serverLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${LOG_HOME}/server.log</file>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${LOG_HOME}/server.%d{yyyy-MM-dd}.log</fileNamePattern>
-		</rollingPolicy>
-		<encoder>
-			<pattern>%d %X{traceId} %p [%thread] (%file:%line\) - %m %X{uri}%n</pattern>
-			<charset>UTF-8</charset>
-		</encoder>
-	</appender>
+        <file>${LOG_HOME}/server.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/server.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d %X{traceId} %p [%thread] (%file:%line\) - %m %X{uri}%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
 
-	<logger name="com.luna.wednesday" additivity="false" level="INFO">
+    <logger name="com.luna.wednesday" additivity="false" level="INFO">
         <appender-ref ref="serverLog"/>
     </logger>
 
-	<!-- 控制台输出日志 -->
-	<root level="info">
-		<appender-ref ref="STDOUT" />
-	</root>
+    <!-- 控制台输出日志 -->
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+    </root>
 </configuration>

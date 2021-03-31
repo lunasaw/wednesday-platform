@@ -21,7 +21,7 @@ public interface TaskDAO {
      * @param id
      * @return TaskDO
      */
-    @Select("SELECT  id, create_time, modified_time, version, project_id, status, skip, `limit`  FROM tb_task WHERE id = #{id}")
+    @Select("SELECT  id, create_time, modified_time, version, project_id, status, content  FROM tb_task WHERE id = #{id}")
     @Results({
         @Result(column = "id", property = "id", id = true),
         @Result(column = "create_time", property = "createTime"),
@@ -29,8 +29,7 @@ public interface TaskDAO {
         @Result(column = "version", property = "version"),
         @Result(column = "project_id", property = "projectId"),
         @Result(column = "status", property = "status"),
-        @Result(column = "skip", property = "skip"),
-        @Result(column = "limit", property = "limit"),
+        @Result(column = "content", property = "content"),
     })
     TaskDO get(@Param("id") Long id);
 
@@ -40,8 +39,8 @@ public interface TaskDAO {
      * @param taskDO TaskDO
      * @return
      */
-    @Insert("INSERT INTO tb_task(create_time, modified_time, version, project_id, status, skip, `limit`) "
-        + "VALUES (now(), now(), 0, #{projectId}, #{status}, #{skip}, #{limit})")
+    @Insert("INSERT INTO tb_task(create_time, modified_time, version, project_id, status, content) "
+        + "VALUES (now(), now(), 0, #{projectId}, #{status}, #{content})")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     int insert(TaskDO taskDO);
 
@@ -50,9 +49,9 @@ public interface TaskDAO {
      *
      * @param list TaskDO列表
      */
-    @Insert("<script>INSERT INTO tb_task(create_time, modified_time, version, project_id, status, skip, `limit`) VALUES "
+    @Insert("<script>INSERT INTO tb_task(id, create_time, modified_time, version, project_id, status, content) VALUES "
         + "<foreach collection='list' index='index' item='n' separator=','> "
-        + "(now(), now(), 0, #{n.projectId}, #{n.status}, #{n.skip}, #{n.limit})"
+        + "(now(), now(), 0, #{n.modifiedTime}, #{n.version}, #{n.projectId}, #{n.status}, #{n.content})"
         + "</foreach></script>")
     void insertBatch(@Param("list") List<TaskDO> list);
 
@@ -61,7 +60,7 @@ public interface TaskDAO {
      *
      * @param taskDO
      */
-    @Update("UPDATE tb_task SET id = #{id}, modified_time = now(), version = #{version}, project_id = #{projectId}, status = #{status}, skip = #{skip}, `limit` = #{limit} WHERE id = #{id}")
+    @Update("UPDATE tb_task SET id = #{id}, create_time = #{createTime}, modified_time = now(), version = #{version}, project_id = #{projectId}, status = #{status}, content = #{content} WHERE id = #{id}")
     void update(TaskDO taskDO);
 
     /**
@@ -91,7 +90,6 @@ public interface TaskDAO {
     @Select("SELECT COUNT(*) FROM tb_task")
     int count();
 
-
     /**
      * 通过projectId和状态查询Task
      *
@@ -99,7 +97,7 @@ public interface TaskDAO {
      * @param status
      * @return
      */
-    @Select("SELECT  id, create_time, modified_time, version, project_id, status, skip, `limit`  FROM tb_task WHERE project_id=#{projectId} AND status=#{status} LIMIT 1")
+    @Select("SELECT  id, create_time, modified_time, version, project_id, status, content  FROM tb_task WHERE project_id=#{projectId} AND status=#{status} LIMIT 1")
     @Results({
         @Result(column = "id", property = "id", id = true),
         @Result(column = "create_time", property = "createTime"),
@@ -107,11 +105,9 @@ public interface TaskDAO {
         @Result(column = "version", property = "version"),
         @Result(column = "project_id", property = "projectId"),
         @Result(column = "status", property = "status"),
-        @Result(column = "skip", property = "skip"),
-        @Result(column = "limit", property = "limit"),
+        @Result(column = "content", property = "content"),
     })
     TaskDO getOneByProjectIdAndStatus(@Param("projectId") Long projectId, @Param("status") String status);
-
 
     /**
      * 通过projectId 项目状态 拿出第一个项目的所有Task
@@ -121,7 +117,7 @@ public interface TaskDAO {
      * @param limit
      * @return
      */
-    @Select("SELECT  id, create_time, modified_time, version, project_id, status, skip, `limit`  FROM tb_task WHERE  project_id=#{projectId} AND status=#{status} LIMIT #{limit}")
+    @Select("SELECT  id, create_time, modified_time, version, project_id, status, content  FROM tb_task WHERE  project_id=#{projectId} AND status=#{status} LIMIT #{limit}")
     @Results({
         @Result(column = "id", property = "id", id = true),
         @Result(column = "create_time", property = "createTime"),
@@ -129,12 +125,10 @@ public interface TaskDAO {
         @Result(column = "version", property = "version"),
         @Result(column = "project_id", property = "projectId"),
         @Result(column = "status", property = "status"),
-        @Result(column = "skip", property = "skip"),
-        @Result(column = "limit", property = "limit"),
+        @Result(column = "content", property = "content"),
     })
     List<TaskDO> listByProjectIdAndStatusWithLimit(@Param("projectId") long projectId, @Param("status") String status,
         @Param("limit") int limit);
-
 
     /**
      * 通过projectId和非本状态查询Task
@@ -143,7 +137,7 @@ public interface TaskDAO {
      * @param status
      * @return
      */
-    @Select("SELECT  id, create_time, modified_time, version, project_id, status, skip, `limit`  FROM tb_task WHERE  project_id=#{projectId} AND status!=#{status} LIMIT 1")
+    @Select("SELECT  id, create_time, modified_time, version, project_id, status, content  FROM tb_task WHERE  project_id=#{projectId} AND status!=#{status} LIMIT 1")
     @Results({
         @Result(column = "id", property = "id", id = true),
         @Result(column = "create_time", property = "createTime"),
@@ -151,8 +145,7 @@ public interface TaskDAO {
         @Result(column = "version", property = "version"),
         @Result(column = "project_id", property = "projectId"),
         @Result(column = "status", property = "status"),
-        @Result(column = "skip", property = "skip"),
-        @Result(column = "limit", property = "limit"),
+        @Result(column = "content", property = "content"),
     })
     TaskDO getOneByProjectIdAndNotStatus(@Param("projectId") long projectId, @Param("status") String status);
 
@@ -162,7 +155,7 @@ public interface TaskDAO {
      * @param status
      * @return
      */
-    @Select("SELECT  id, create_time, modified_time, version, project_id, status, skip, `limit`  FROM tb_task WHERE status=#{status}")
+    @Select("SELECT  id, create_time, modified_time, version, project_id, status, content  FROM tb_task WHERE status=#{status}")
     @Results({
         @Result(column = "id", property = "id", id = true),
         @Result(column = "create_time", property = "createTime"),
@@ -170,8 +163,7 @@ public interface TaskDAO {
         @Result(column = "version", property = "version"),
         @Result(column = "project_id", property = "projectId"),
         @Result(column = "status", property = "status"),
-        @Result(column = "skip", property = "skip"),
-        @Result(column = "limit", property = "limit"),
+        @Result(column = "content", property = "content"),
     })
     List<TaskDO> listByStatus(@Param("status") String status);
 }

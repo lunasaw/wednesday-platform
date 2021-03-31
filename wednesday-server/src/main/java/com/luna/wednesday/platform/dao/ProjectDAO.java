@@ -10,10 +10,11 @@ import com.luna.wednesday.platform.entity.ProjectDO;
  * (tb_project).
  *
  * @author luna
- * @since 2021/02/23 22:37:35
+ * @since 2021/03/16 13:29:43
  */
 @Mapper
 public interface ProjectDAO {
+
 
     /**
      * 根据状态查询
@@ -21,18 +22,20 @@ public interface ProjectDAO {
      * @param status
      * @return ProjectDO
      */
-    @Select("SELECT  id, create_time, modified_time, version, name, status, content, remarks  FROM tb_project WHERE status = #{status}")
+    @Select("SELECT  id, create_time, modified_time, version, type, calculation_object_id, status, content, remarks  FROM tb_project WHERE status = #{status}")
     @Results({
         @Result(column = "id", property = "id", id = true),
         @Result(column = "create_time", property = "createTime"),
         @Result(column = "modified_time", property = "modifiedTime"),
         @Result(column = "version", property = "version"),
-        @Result(column = "name", property = "name"),
+        @Result(column = "type", property = "type"),
+        @Result(column = "calculation_object_id", property = "calculationObjectId"),
         @Result(column = "status", property = "status"),
         @Result(column = "content", property = "content"),
         @Result(column = "remarks", property = "remarks"),
     })
     List<ProjectDO> listByStatus(@Param("status") String status);
+
 
     /**
      * 根据id查询
@@ -40,13 +43,14 @@ public interface ProjectDAO {
      * @param id
      * @return ProjectDO
      */
-    @Select("SELECT  id, create_time, modified_time, version, name, status, content, remarks  FROM tb_project WHERE id = #{id}")
+    @Select("SELECT  id, create_time, modified_time, version, type, calculation_object_id, status, content, remarks  FROM tb_project WHERE id = #{id}")
     @Results({
         @Result(column = "id", property = "id", id = true),
         @Result(column = "create_time", property = "createTime"),
         @Result(column = "modified_time", property = "modifiedTime"),
         @Result(column = "version", property = "version"),
-        @Result(column = "name", property = "name"),
+        @Result(column = "type", property = "type"),
+        @Result(column = "calculation_object_id", property = "calculationObjectId"),
         @Result(column = "status", property = "status"),
         @Result(column = "content", property = "content"),
         @Result(column = "remarks", property = "remarks"),
@@ -59,8 +63,8 @@ public interface ProjectDAO {
      * @param projectDO ProjectDO
      * @return
      */
-    @Insert("INSERT INTO tb_project(create_time, modified_time, version, name, status, content, remarks) "
-        + "VALUES (now(), now(), 0, #{name}, #{status}, #{content}, #{remarks})")
+    @Insert("INSERT INTO tb_project(create_time, modified_time, version, type, calculation_object_id, status, content, remarks) "
+        + "VALUES (now(), now(), 0, #{type}, #{calculationObjectId}, #{status}, #{content}, #{remarks})")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     int insert(ProjectDO projectDO);
 
@@ -69,9 +73,9 @@ public interface ProjectDAO {
      *
      * @param list ProjectDO列表
      */
-    @Insert("<script>INSERT INTO tb_project(create_time, modified_time, version, name, status, content, remarks) VALUES "
+    @Insert("<script>INSERT INTO tb_project(create_time, modified_time, version, type, calculation_object_id, status, content, remarks) VALUES "
         + "<foreach collection='list' index='index' item='n' separator=','> "
-        + "(now(), now(), 0, #{n.name}, #{n.status}, #{n.content}, #{n.remarks})"
+        + "(now(), now(), 0, #{n.type}, #{n.calculationObjectId}, #{n.status}, #{n.content}, #{n.remarks})"
         + "</foreach></script>")
     void insertBatch(@Param("list") List<ProjectDO> list);
 
@@ -80,7 +84,7 @@ public interface ProjectDAO {
      *
      * @param projectDO
      */
-    @Update("UPDATE tb_project SET id = #{id}, modified_time = now(), version = version+1, name = #{name}, status = #{status}, content = #{content}, remarks=#{remarks} WHERE id = #{id} and version = #{version}")
+    @Update("UPDATE tb_project SET id = #{id}, modified_time = now(), version = version+1, type = #{type}, calculation_object_id = #{calculationObjectId}, status = #{status}, content = #{content}, remarks = #{remarks} WHERE id = #{id} and version=#{version}")
     void update(ProjectDO projectDO);
 
     /**
@@ -110,19 +114,21 @@ public interface ProjectDAO {
     @Select("SELECT COUNT(*) FROM tb_project")
     int count();
 
+
     /**
      * 状态查询project
      *
      * @param status
      * @return
      */
-    @Select("SELECT  id, create_time, modified_time, version, name, status, content, remarks  FROM tb_project WHERE status=#{status} LIMIT 1")
+    @Select("SELECT  id, create_time, modified_time, version, type, calculation_object_id, status, content, remarks  FROM tb_project WHERE status = #{status}  LIMIT 1")
     @Results({
         @Result(column = "id", property = "id", id = true),
         @Result(column = "create_time", property = "createTime"),
         @Result(column = "modified_time", property = "modifiedTime"),
         @Result(column = "version", property = "version"),
-        @Result(column = "name", property = "name"),
+        @Result(column = "type", property = "type"),
+        @Result(column = "calculation_object_id", property = "calculationObjectId"),
         @Result(column = "status", property = "status"),
         @Result(column = "content", property = "content"),
         @Result(column = "remarks", property = "remarks"),

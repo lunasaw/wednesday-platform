@@ -1,35 +1,38 @@
-package com.luna.wednesday.platform.entity;
+package com.luna.wednesday.platform.dto;
+
+import com.iteknical.wednesday.computing.dto.constant.AttackModeConstant;
 
 import java.util.Date;
 
 /**
- * (tb_project#)
- *
  * @author luna
- * @since 2021/03/16 13:29:43
  */
-public class ProjectDO {
-
-    private static final long serialVersionUID = 1L;
+public class HashcatProjectDTO {
 
     /** id (Not Null) */
-    private Long              id;
+    private Long    id;
     /** 创建时间 (Not Null) */
-    private Date              createTime;
+    private Date    createTime;
     /** 修改时间 (Not Null) */
-    private Date              modifiedTime;
+    private Date    modifiedTime;
     /** 版本 (Not Null) */
-    private Integer           version;
-    /** (Not Null) */
-    private String            type;
-    /** (Not Null) */
-    private Long              calculationObjectId;
+    private Integer version;
+    /** 计算类型 hashcat 或者 其他 (Not Null) */
+    private String  type;
+    /** 计算对象id (Not Null) */
+    private Long    calculationObjectId;
     /** 状态 (Not Null) */
-    private String            status;
-    /** 扩展 (Not Null) */
-    private String            content;
+    private String  status;
+    /** 总keyspace大小 */
+    private Long    keyspace;
+    /** 掩码 */
+    private String  mask;
+    /** 见{@link AttackModeConstant} */
+    private int     attackMode;
+    /** 实际行数 */
+    private long    lines;
     /**  */
-    private String            remarks;
+    private String  remarks;
 
     public Long getId() {
         return id;
@@ -68,7 +71,7 @@ public class ProjectDO {
     }
 
     public void setType(String type) {
-        this.type = type == null ? null : type.trim();
+        this.type = type;
     }
 
     public Long getCalculationObjectId() {
@@ -84,15 +87,39 @@ public class ProjectDO {
     }
 
     public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+        this.status = status;
     }
 
-    public String getContent() {
-        return content;
+    public Long getKeyspace() {
+        return keyspace;
     }
 
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+    public void setKeyspace(Long keyspace) {
+        this.keyspace = keyspace;
+    }
+
+    public String getMask() {
+        return mask;
+    }
+
+    public void setMask(String mask) {
+        this.mask = mask;
+    }
+
+    public int getAttackMode() {
+        return attackMode;
+    }
+
+    public void setAttackMode(int attackMode) {
+        this.attackMode = attackMode;
+    }
+
+    public long getLines() {
+        return lines;
+    }
+
+    public void setLines(long lines) {
+        this.lines = lines;
     }
 
     public String getRemarks() {
@@ -100,7 +127,6 @@ public class ProjectDO {
     }
 
     public void setRemarks(String remarks) {
-        this.remarks = remarks == null ? null : remarks.trim();
+        this.remarks = remarks;
     }
-
 }

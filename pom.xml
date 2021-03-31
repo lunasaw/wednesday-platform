@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>wednesday-server</module>
+        <module>wednesday-common</module>
     </modules>
 
     <parent>
@@ -90,7 +91,7 @@
 
             <!-- self -->
             <dependency>
-                <groupId>com.iteknical</groupId>
+                <groupId>com.luna</groupId>
                 <artifactId>wednesday-common</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>

@@ -38,6 +38,13 @@ public class HashService {
         return calculationObjectDAO.insert(DTO2DOUtils.hashDTO2CalculationObjectDO(hashDTO)) == 1;
     }
 
+    /**
+     * 更新找到的hash
+     * 
+     * @param id hashId
+     * @param hash hash值
+     * @param plain 明文
+     */
     public void update(Long id, String hash, String plain) {
         CalculationObjectDO calculationObjectDO = calculationObjectDAO.get(id);
         HashDTO hashDTO = DO2DTOUtils.calculationObjectDO2HashDTO(calculationObjectDO);

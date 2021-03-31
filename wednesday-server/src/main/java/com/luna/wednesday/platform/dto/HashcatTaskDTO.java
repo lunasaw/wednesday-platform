@@ -1,31 +1,45 @@
-package com.luna.wednesday.platform.entity;
+package com.luna.wednesday.platform.dto;
 
 import java.util.Date;
 
 /**
- * (tb_task#)
- *
- * @author luna
- * @since 2021/02/23 22:55:35
+ * @author luna@mac
+ * 2021年03月31日 08:53:00
  */
-public class TaskDO {
+public class HashcatTaskDTO {
 
-    private static final long serialVersionUID = 1L;
+    private long    skip;
+
+    private long    limit;
 
     /** id (Not Null) */
-    private Long              id;
+    private Long    id;
     /** 创建时间 (Not Null) */
-    private Date              createTime;
+    private Date    createTime;
     /** 修改时间 (Not Null) */
-    private Date              modifiedTime;
+    private Date    modifiedTime;
     /** 版本 (Not Null) */
-    private Integer           version;
+    private Integer version;
     /** 项目id (Not Null) */
-    private Long              projectId;
+    private Long    projectId;
     /** task状态 (Not Null) */
-    private String            status;
+    private String  status;
 
-    private String            content;
+    public long getSkip() {
+        return skip;
+    }
+
+    public void setSkip(long skip) {
+        this.skip = skip;
+    }
+
+    public long getLimit() {
+        return limit;
+    }
+
+    public void setLimit(long limit) {
+        this.limit = limit;
+    }
 
     public Long getId() {
         return id;
@@ -72,14 +86,6 @@ public class TaskDO {
     }
 
     public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
+        this.status = status;
     }
 }
