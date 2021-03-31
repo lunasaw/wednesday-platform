@@ -1,8 +1,8 @@
-package com.iteknical.wednesday.computing.dto.constant;
-
-import java.util.Map;
+package com.luna.wednesday.calculate.constant;
 
 import com.google.common.collect.ImmutableMap;
+
+import java.util.Map;
 
 /**
  * @author Tony
